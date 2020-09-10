@@ -15,6 +15,13 @@ namespace SFCEdit
          * 0x80 bytes in is assembly instructions
          */
 
+        /// <summary>
+        ///     Creates a license from a given license filename. It must follow the following format:
+        ///     SFCEDIT_XXXXXX.lic where X can be any valid letter/number.
+        /// </summary>
+        /// <param name="fileName">Name of the license file.</param>
+        /// <param name="licensedTo">Name of the owner of the license.</param>
+        /// <returns>The license as a fixed 512 bytes array.</returns>
         public static byte[] CreateLicense(string fileName, string licensedTo)
         {
             Span<uint> xorSpan = new uint[128];
@@ -33,6 +40,11 @@ namespace SFCEdit
             return bytes.ToArray();
         }
 
+        /// <summary>
+        ///     Gets the name of the owner of the given license.
+        /// </summary>
+        /// <param name="fileName">Name of the license. Used to XOR the content of the license.</param>
+        /// <param name="input">License content as a fixed 512 bytes array.</param>
         public static string? GetLicenseName(string fileName, byte[] input)
         {
             Span<uint> xorSpan = MemoryMarshal.Cast<byte, uint>(input);
@@ -50,6 +62,10 @@ namespace SFCEdit
             return null;
         }
 
+        /// <summary>
+        ///     Gets the XOR Key used to decrypt the license content.
+        /// </summary>
+        /// <param name="fileName">File name used to decode the XOR key of the license.</param>
         public static uint GetXorKey(string fileName)
         {
             uint xorKey = 0;
