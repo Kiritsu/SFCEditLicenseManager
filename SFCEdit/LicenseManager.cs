@@ -64,6 +64,11 @@ namespace SFCEdit
         /// <param name="input">License content as a fixed 512 bytes array.</param>
         public static string GetLicenseName(string fileName, byte[] input)
         {
+            if (input.Length != 512)
+            {
+                return null;
+            }
+
             Span<uint> xorSpan = MemoryMarshal.Cast<byte, uint>(input);
 
             uint xorKey = GetXorKey(fileName);
