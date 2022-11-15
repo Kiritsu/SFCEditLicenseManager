@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -48,7 +48,7 @@ namespace SFCEdit
             xorSpan[0] = 0x4C494331; // key that is hardcoded in the app and need to match
             
             licensedTo.AsSpan().CopyTo(MemoryMarshal.Cast<uint, char>(xorSpan)[0x6..]);
-            ShellCode.AsSpan().CopyTo(xorSpan[20..]);
+            ShellCode.AsSpan().CopyTo(xorSpan[32..]);
             
             for (int i = 0; i < 128; i++)
                 xorSpan[i] ^= xorKey;
